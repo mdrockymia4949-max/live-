@@ -2,7 +2,7 @@ name: Update Toffee Playlist
 
 on:
   schedule:
-    - cron: '0 */3 * * *'     # প্রতি ৬ ঘন্টায়
+    - cron: '0 */3 * * *'
   workflow_dispatch:
 
 jobs:
@@ -15,6 +15,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
 
       - name: Update Playlist
         run: python update_playlist.py
