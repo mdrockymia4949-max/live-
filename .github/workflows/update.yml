@@ -1,0 +1,28 @@
+name: Update Toffee Playlist
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'     # প্রতি ৬ ঘন্টায়
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Update Playlist
+        run: python update_playlist.py
+
+      - name: Commit & Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add toffee_playlist.m3u
+          git commit -m "Auto Update Toffee Playlist" || echo "No changes to commit"
+          git push
